@@ -1,0 +1,22 @@
+STEP12
+-> configure default gateway on both "PC's" (R1 en R2)
+
+R1
+---
+ena
+conf t
+ip route 0.0.0.0 0.0.0.0 10.1.10.254
+end
+wr
+
+R2
+---
+ena
+conf t
+# let's disable ip routing just for fun
+no ip routing
+# now we have to use another command 
+ip default-gateway 10.1.20.254
+end
+wr
+
