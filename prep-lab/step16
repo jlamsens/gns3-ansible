@@ -1,0 +1,12 @@
+STEP16
+-> redistribute a static route
+
+
+R3
+---
+ena
+conf t
+router eigrp 100
+redistribute static metric 10000 100 255 1 1500
+end
+wr
