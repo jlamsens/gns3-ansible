@@ -1,0 +1,38 @@
+STEP 6
+-> optimize spanning tree on distribution switches
+
+S1
+---
+conf t
+# make this switch the root for VLAN10
+spanning-tree vlan 10 priority 0
+# make this switch the root for VLAN1
+spanning-tree vlan 1 priority 0
+end
+wr
+
+S2
+---
+conf t
+# make this switch the root for VLAN20
+spanning-tree vlan 20 priority 0
+end
+wr
+
+S1
+---
+conf t
+# make this switch the BACKUP root for VLAN20
+spanning-tree vlan 20 priority 4096
+end
+wr
+
+S2
+---
+conf t
+# make this switch the BACKUP root for VLAN10
+spanning-tree vlan 10 priority 4096
+# make this switch the BACKUP root for VLAN1
+spanning-tree vlan 1 priority 4096
+end
+wr
