@@ -31,3 +31,4 @@ spanning-tree link-type point-to-point
 no shut
 end
 wr
+
