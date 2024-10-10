@@ -10,11 +10,13 @@ int ra g0/0-1
 shut
 # enable LACP using negotiation
 channel-group 1 mode active
+no shut
 int po1
 spanning-tree link-type point-to-point
 no shut
 end
 wr
+
 
 S2
 ---
@@ -24,10 +26,9 @@ int ra g0/0-1
 shut
 # enable LACP using negotiation
 channel-group 1 mode active
+no shut
 int po1
 spanning-tree link-type point-to-point
 no shut
 end
 wr
-
-
