@@ -1,0 +1,24 @@
+STEP18
+-> enable DNS lookup on R1/R2
+
+R1
+---
+ena
+conf t
+# enabled by default
+ip domain-lookup
+# use google DNS server
+ip name-server 8.8.8.8
+end
+wr
+
+R2
+---
+ena
+conf t
+# enabled by default
+ip domain-lookup
+# use google DNS server
+ip name-server 8.8.8.8
+end
+wr
