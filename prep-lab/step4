@@ -1,0 +1,49 @@
+STEP 4
+
+S1
+---
+ena
+conf t
+int ra g0/0-3
+switchport trunk encapsulation dot1q
+switchport mode trunk
+# disable DTP as it is still enabled
+switchport nonegotiate
+end
+wr
+
+S2
+---
+ena
+conf t
+int ra g0/0-3
+switchport trunk encapsulation dot1q
+switchport mode trunk
+# disable DTP as it is still enabled
+switchport nonegotiate
+end
+wr
+
+S3
+---
+ena
+conf t
+int ra g0/0-1
+switchport trunk encapsulation dot1q
+switchport mode trunk
+# disable DTP as it is still enabled
+switchport nonegotiate
+end
+wr
+
+S4
+---
+ena
+conf t
+int ra g0/0-1
+switchport trunk encapsulation dot1q
+switchport mode trunk
+# disable DTP as it is still enabled
+switchport nonegotiate
+end
+wr
