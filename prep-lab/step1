@@ -1,6 +1,7 @@
 STEP1
 -> hostname, shutdown unused interfaces, vtp and VLANs
 
+
 S1
 ---
 ena
