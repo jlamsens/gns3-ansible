@@ -3,6 +3,7 @@ STEP 6
 
 S1
 ---
+ena
 conf t
 # make this switch the root for VLAN10
 spanning-tree vlan 10 priority 0
@@ -13,6 +14,7 @@ wr
 
 S2
 ---
+ena
 conf t
 # make this switch the root for VLAN20
 spanning-tree vlan 20 priority 0
@@ -21,6 +23,7 @@ wr
 
 S1
 ---
+ena
 conf t
 # make this switch the BACKUP root for VLAN20
 spanning-tree vlan 20 priority 4096
@@ -29,6 +32,7 @@ wr
 
 S2
 ---
+ena
 conf t
 # make this switch the BACKUP root for VLAN10
 spanning-tree vlan 10 priority 4096
