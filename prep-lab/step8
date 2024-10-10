@@ -1,0 +1,44 @@
+STEP 8
+-> optimize STP further
+
+
+S3
+---
+ena
+conf t
+int ra g0/0-1
+spanning-tree link-type point-to-point
+end
+wr
+
+S4
+---
+ena
+conf t
+int ra g0/0-1
+spanning-tree link-type point-to-point
+end
+wr
+
+S1
+---
+ena
+conf t
+int ra g0/0-3
+spanning-tree link-type point-to-point
+int port-channel 1
+spanning-tree link-type point-to-point
+end
+wr
+
+S2
+---
+ena
+conf t
+int ra g0/0-3
+spanning-tree link-type point-to-point
+int port-channel 1
+spanning-tree link-type point-to-point
+end
+wr
+
