@@ -1,0 +1,33 @@
+STEP 7
+-> link aggregation using LACP
+
+
+S1
+---
+ena
+conf t
+int ra g0/0-1
+shut
+switchport trunk encapsulation dot1q
+switchport mode trunk
+# enable LACP using negotiation
+channel-group 1 mode active
+spanning-tree link-type point-to-point
+no shut
+end
+wr
+
+S2
+---
+ena
+conf t
+int ra g0/0-1
+shut
+switchport trunk encapsulation dot1q
+switchport mode trunk
+# enable LACP using negotiation
+channel-group 1 mode active
+spanning-tree link-type point-to-point
+no shut
+end
+wr
