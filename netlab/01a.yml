@@ -1,0 +1,9 @@
+---
+
+- name: Gather facts
+  hosts: all
+  gather_facts: no
+  tasks:
+
+    - name: Gather minimum amount of facts
+      cisco.ios.ios_facts:

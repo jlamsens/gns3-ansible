@@ -1,0 +1,40 @@
+---
+
+- name: Play STEP4-S2
+  hosts: S2
+  gather_facts: no
+
+  tasks:
+
+    # does result in a changed state on a VLAN interface, that's annoying!
+    - name: Configure static IP
+      cisco.ios.ios_l3_interfaces:
+        config:
+          - name: vlan10
+            ipv4:
+              - address: 10.1.10.2 255.255.255.0
+          - name: vlan20
+            ipv4:
+              - address: 10.1.20.2 255.255.255.0
+        state: merged
+      notify: Save configuration
+    
+    - name: Bring up the interfaces
+      # method3
+      # does result in a changed state on a VLAN interface, that's annoying!
+      # in a long list (no interface range possible)
+      cisco.ios.ios_interfaces:
+        config:
+          - name: vlan10
+            enabled: true
+            description: SVI
+          - name: vlan20
+            enabled: true
+            description: SVI
+      notify: Save configuration
+
+  handlers:
+    - name: Save configuration
+      cisco.ios.ios_command:
+        commands: "write memory"
+      when: not ansible_check_mode

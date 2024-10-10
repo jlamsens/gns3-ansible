@@ -1,0 +1,29 @@
+---
+
+- name: Play STEP1
+  hosts: distribution, access
+  gather_facts: no
+
+  tasks:
+
+    # edit /etc/hosts to comment out the hostnames
+    # edit nethosts and modify for example "S1 ansible_host=10.1.100.1"
+    # Method1
+      # generic module
+      # more for pushing raw config commands
+      # no built-in logic to check if hostname is already set
+      # so Ansible "may" report "changed" state even if hostname was already correct
+
+    - name: Configure hostname
+      cisco.ios.ios_config:
+        lines: hostname "{{ inventory_hostname }}"
+
+    # Method2
+      # specialized module
+      # better built-in idempotency
+      # checks if the desired state differs from the current state
+    # - name: Configure hostname
+    #   cisco.ios.ios_hostname:
+    #     config:
+    #       hostname: "{{ inventory_hostname }}"
+    #     state: merged

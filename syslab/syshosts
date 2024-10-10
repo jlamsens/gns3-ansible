@@ -1,0 +1,8 @@
+# there is a better way of declaring host variables than in 
+# the inventory file, but it works
+
+[web]
+vm26 apache_package=apache2 php_package=libapache2-mod-php apache_service=apache2 apache_src=apache2.conf apache_dest=/etc/apache2/apache2.conf
+
+[db]
+vm27 apache_package=httpd php_package=php apache_service=httpd apache_src=httpd.conf apache_dest=/etc/httpd/conf/httpd.conf

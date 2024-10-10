@@ -1,0 +1,61 @@
+---
+
+- name: Play STEP1
+  hosts: distribution, access
+  gather_facts: no
+
+  tasks:
+
+    # use the specialized module instead of ios_config
+    - name: Configure hostname
+      cisco.ios.ios_hostname:
+        config:
+          hostname: "{{ inventory_hostname }}"
+        state: merged
+
+    # method4
+    # not resulting in a changed state
+    # but it is a long list (no interface range possible)
+    # this seems very fast, so the preferred way
+    - name: Shutdown all unused interfaces
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet1/1
+            enabled: false
+            description: Shutdown all unused ports
+          - name: GigabitEthernet1/2
+            enabled: false
+            description: Shutdown all unused ports
+          - name: GigabitEthernet1/3
+            enabled: false
+            description: Shutdown all unused ports
+          - name: GigabitEthernet2/0
+            enabled: false
+            description: Shutdown all unused ports
+          - name: GigabitEthernet2/1
+            enabled: false
+            description: Shutdown all unused ports
+          - name: GigabitEthernet2/2
+            enabled: false
+            description: Shutdown all unused ports
+          - name: GigabitEthernet2/3
+            enabled: false
+            description: Shutdown all unused ports
+          - name: GigabitEthernet3/0
+            enabled: false
+            description: Shutdown all unused ports
+          - name: GigabitEthernet3/1
+            enabled: false
+            description: Shutdown all unused ports
+          - name: GigabitEthernet3/2
+            enabled: false
+            description: Shutdown all unused ports
+          - name: GigabitEthernet3/3
+            enabled: false
+            description: Shutdown all unused ports
+
+    # does not result in "changed" state
+    - name: Put VTP in transparent mode
+      cisco.ios.ios_config:
+        lines:
+          - vtp mode transparent

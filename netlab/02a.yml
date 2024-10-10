@@ -1,0 +1,10 @@
+---
+
+- name: Get device versions
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Running 'show version' command
+      cisco.ios.ios_command:
+        commands:
+          - show version

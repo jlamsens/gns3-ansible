@@ -1,0 +1,25 @@
+---
+
+- name: Play to install apache2 on Linux Mint
+  hosts: all
+  gather_facts: yes
+  become: true
+  tasks:
+
+  - name: Install the apache2 with php support (Linux Mint)
+    apt:
+      name: 
+        - apache2
+        - libapache2-mod-php
+      state: present
+      update_cache: yes
+    when: ansible_distribution == "Linux Mint"
+
+  - name: Install the httpd with php support (Rocky Linux)
+    dnf:
+      name: 
+        - httpd
+        - php
+      state: present
+      update_cache: yes
+    when: ansible_distribution == "Rocky"

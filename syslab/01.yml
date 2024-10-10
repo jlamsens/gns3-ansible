@@ -1,0 +1,8 @@
+---
+
+- name: First playbook
+  hosts: vm26
+  tasks:
+    - name: Print a message
+      ansible.builtin.debug:
+        msg: "Network automation rules!"

@@ -1,0 +1,22 @@
+---
+
+- name: Install the apache webserver
+  hosts: all
+  gather_facts: no
+  become: true
+  tasks:
+
+  - name: Install the apache and php package
+    ansible.builtin.package:
+      name: 
+        - "{{ apache_package }}"
+        - "{{ php_package }}"
+      state: present
+      update_cache: yes
+
+  - name: Ensure the apache service is started at boot and running at all times
+    ansible.builtin.systemd_service:
+      name: "{{ apache_service }}"
+      enabled: true
+      state: started
+  

@@ -1,0 +1,37 @@
+---
+
+- name: Play STEP1
+  hosts: distribution, access
+  gather_facts: no
+
+  tasks:
+
+    # use the specialized module instead of ios_config
+    - name: Configure hostname
+      cisco.ios.ios_hostname:
+        config:
+          hostname: "{{ inventory_hostname }}"
+        state: merged
+
+    # method3
+    # since the ios_config module executes commands directly and doesn't inherently check for the current state of the configuration, 
+    # it may always return a "changed" status when a command is sent, regardless of whether the state has already been applied
+    # in this case, it returns OK!
+    - name: Shutdown all unused interfaces
+      cisco.ios.ios_config:
+        lines:
+          - shutdown
+          - description Shutdown all unused ports
+        parents: "{{ item }}"
+      with_items:
+        - interface GigabitEthernet1/1
+        - interface GigabitEthernet1/2
+        - interface GigabitEthernet1/3
+        - interface GigabitEthernet2/0
+        - interface GigabitEthernet2/1
+        - interface GigabitEthernet2/2
+        - interface GigabitEthernet2/3
+        - interface GigabitEthernet3/0
+        - interface GigabitEthernet3/1
+        - interface GigabitEthernet3/2
+        - interface GigabitEthernet3/3

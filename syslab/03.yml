@@ -1,0 +1,14 @@
+---
+
+- name: Play to install apache2 on Linux Mint
+  hosts: vm26
+  gather_facts: no
+  become: true
+  tasks:
+
+  - name: Install the apache2 package
+    apt:
+      name: apache2
+      
+  
+  

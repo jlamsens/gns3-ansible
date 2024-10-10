@@ -1,0 +1,23 @@
+---
+
+# Play 1
+- name: <play_1_name>
+  hosts: <target_hosts_for_play_1>
+  
+  tasks:
+    - name: <task_1_in_play_1>
+      <module_name>:
+        <module_parameters>
+    - name: <task_2_in_play_1>
+      <module_name>:
+        <module_parameters>
+
+# Play 2
+- name: <play_2_name>
+  hosts: <target_hosts_for_play_2>
+  
+  tasks:
+    - name: <task_1_in_play_2>
+      <module_name>:
+        <module_parameters>
+

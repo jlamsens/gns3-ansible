@@ -1,0 +1,13 @@
+---
+
+- name: Gather and display facts
+  hosts: all
+  gather_facts: no
+  tasks:
+
+    - name: Gather minimum amount of facts
+      cisco.ios.ios_facts:
+    
+    - name: Display gathered facts
+      debug:
+        var: ansible_facts

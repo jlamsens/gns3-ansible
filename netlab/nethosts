@@ -1,0 +1,16 @@
+[distribution]
+S1 ansible_host=10.1.100.1
+S2 ansible_host=10.1.100.2
+
+[access]
+S3 ansible_host=10.1.100.3
+S4 ansible_host=10.1.100.4
+
+[router]
+R3 ansible_host=10.1.100.253
+
+[all:vars]
+ansible_user=admin
+ansible_password=admin
+ansible_network_os=ios
+ansible_connection=ansible.netcommon.network_cli

@@ -1,0 +1,42 @@
+---
+
+- name: Play STEP2
+  hosts: R3
+  gather_facts: no
+
+  tasks:
+
+    # use the specialized module instead of ios_config
+    - name: Configure hostname
+      cisco.ios.ios_hostname:
+        config:
+          hostname: "{{ inventory_hostname }}"
+        state: merged
+      notify: Save configuration
+
+    - name: Configure DHCP
+      cisco.ios.ios_l3_interfaces:
+        config:
+          - name: GigabitEthernet0/1
+            ipv4:
+              - dhcp:
+                  enable: true
+        state: merged
+      notify: Save configuration
+    
+    - name: Bring up the interface
+      # method3
+      # does not result in a changed state on a physical interface
+      # in a long list (no interface range possible)
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet0/1
+            enabled: true
+            description: DHCP IP
+      notify: Save configuration          
+
+  handlers:
+    - name: Save configuration
+      cisco.ios.ios_command:
+        commands: "write memory"
+      when: not ansible_check_mode

@@ -1,0 +1,34 @@
+---
+
+- name: Play STEP1
+  hosts: distribution, access
+  gather_facts: no
+
+  tasks:
+
+    # use the specialized module instead of ios_config
+    - name: Configure hostname
+      cisco.ios.ios_hostname:
+        config:
+          hostname: "{{ inventory_hostname }}"
+        state: merged
+
+    # method1
+    # the provided example won't work as intended because the cisco.ios.ios_config module 
+    # processes each line as a separate command in global configuration mode rather than 
+    # grouping them together in the way required for interface range commands
+    # see "output"
+    - name: Shutdown all unused interfaces
+      cisco.ios.ios_config:
+        lines:
+          - interface range GigabitEthernet1/1-3
+          - shutdown
+          - interface range GigabitEthernet2/0-3
+          - shutdown
+          - interface range GigabitEthernet3/0-3
+          - shutdown
+      register: output
+    
+    - name: Show output
+      debug:
+        var: output

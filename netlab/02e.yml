@@ -1,0 +1,19 @@
+---
+
+- name: Get device versions
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Running 'show version' command
+      cisco.ios.ios_command:
+        commands:
+          - show version
+        # add a condition
+        wait_for: result[0] contains IOS
+      # save the output of above command to a variable
+      register: show_ver_output
+    
+    - name: Extracting only the relevant information
+      debug:
+        # show only the first line
+        var: show_ver_output.stdout_lines[0][0]

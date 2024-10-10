@@ -1,0 +1,16 @@
+---
+
+- name: Gather and display facts
+  hosts: all
+  gather_facts: no
+  tasks:
+
+    - name: Gather all but hardware facts
+      cisco.ios.ios_facts:
+        gather_subset:
+          - all
+          - "!hardware"
+    
+    - name: Display gathered facts
+      debug:
+        var: ansible_facts

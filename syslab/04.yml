@@ -1,0 +1,16 @@
+---
+
+- name: Configure passwordless sudo for user guru
+  hosts: all
+  become: true
+  tasks:
+
+    - name: Create sudoers file for user "guru"
+      copy:
+        dest: /etc/sudoers.d/guru
+        content: |
+          guru ALL=(ALL) NOPASSWD: ALL
+        mode: '0440'
+        owner: root
+        group: root
+

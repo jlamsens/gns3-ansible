@@ -1,0 +1,15 @@
+---
+
+- name: Gather and display facts
+  hosts: all
+  gather_facts: no
+  tasks:
+
+    - name: Gather minimal- and L2 interfaces facts
+      cisco.ios.ios_facts:
+        gather_subset: min
+        gather_network_resources: l2_interfaces
+    
+    - name: Display gathered facts
+      debug:
+        var: ansible_facts

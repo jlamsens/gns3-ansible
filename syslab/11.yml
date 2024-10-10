@@ -1,0 +1,16 @@
+---
+
+- name: Install the apache webserver
+  hosts: all
+  gather_facts: no
+  become: true
+  tasks:
+
+  - name: Install the apache and php package
+    package:
+      name: 
+        - "{{ apache_package }}"
+        - "{{ php_package }}"
+      state: present
+      update_cache: yes
+

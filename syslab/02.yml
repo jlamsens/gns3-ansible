@@ -1,0 +1,15 @@
+---
+
+- name: My ping play
+  hosts: all
+  gather_facts: no  # skip gathering facts to make the play faster
+  tasks:
+    # It's important to note that the Ansible ping module doesn't perform
+    # an ICMP ping (like the ping command on the command line). Instead, it
+    # verifies connectivity by attempting to establish an SSH connection and 
+    # running a simple Python script on the target machine. If the connection
+    # is successful, the target node will return a "pong" response. So, 
+    # although it's called "ping," it's actually testing "SSH connectivity"
+    # rather than "network connectivity via ICMP".
+    - name: Ping webservers
+      ansible.builtin.ping:

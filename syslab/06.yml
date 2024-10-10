@@ -1,0 +1,19 @@
+---
+
+- name: Play to install apache2 on Linux Mint
+  hosts: vm26
+  gather_facts: no
+  become: true
+  tasks:
+
+  - name: Update the apt repository index
+    apt:
+      update_cache: true
+
+  - name: Install the apache2 package
+    apt:
+      name: apache2
+
+  - name: Add PHP support for apache2
+    apt:
+      name: libapache2-mod-php

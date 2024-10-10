@@ -1,0 +1,21 @@
+---
+
+- name: Play STEP2
+  hosts: R3
+  gather_facts: no
+
+  tasks:
+
+    # use the specialized module instead of ios_config
+    - name: Configure hostname
+      cisco.ios.ios_hostname:
+        config:
+          hostname: "{{ inventory_hostname }}"
+        state: merged
+      notify: Save configuration
+
+  handlers:
+    - name: Save configuration
+      cisco.ios.ios_command:
+        commands: "write memory"
+      when: not ansible_check_mode

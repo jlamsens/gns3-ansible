@@ -1,0 +1,40 @@
+---
+
+- name: Play STEP5-S1-S2
+  hosts: distribution
+  gather_facts: no
+
+  tasks:
+
+    # static trunk encapsulation mode
+    - name: Configure trunks
+      cisco.ios.ios_l2_interfaces:
+        config:
+          - name: GigabitEthernet0/0
+            mode: trunk
+            #trunk:
+              # allowed_vlans: ...
+              # native vlan: ...
+              # encapsulation: dot1q
+        state: merged
+      notify: Save configuration
+    
+    - name: Bring up the interfaces
+      # method3
+      # does result in a changed state on a VLAN interface, that's annoying!
+      # in a long list (no interface range possible)
+      cisco.ios.ios_interfaces:
+        config:
+          - name: vlan10
+            enabled: true
+            description: SVI
+          - name: vlan20
+            enabled: true
+            description: SVI
+      notify: Save configuration
+
+  handlers:
+    - name: Save configuration
+      cisco.ios.ios_command:
+        commands: "write memory"
+      when: not ansible_check_mode
