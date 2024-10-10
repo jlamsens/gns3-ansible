@@ -2,7 +2,7 @@ STEP2
 
 R1
 ---
-ena
+#ena
 conf t
 hostname R1
 int g0/0
@@ -14,7 +14,7 @@ wr
 
 R2
 ---
-ena
+#ena
 conf t
 hostname R2
 int g0/0
@@ -26,7 +26,7 @@ wr
 
 R3
 ---
-ena
+#ena
 conf t
 hostname R3
 # already present as this is the MGMT interface
