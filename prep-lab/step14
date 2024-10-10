@@ -1,0 +1,56 @@
+STEP14
+-> configure EIGRP
+
+
+S1
+---
+ena
+conf t
+# autonomous system number must be the same on S2
+router eigrp 100
+network 10.0.0.0
+# it is a good practice to disable auto summarization in eigrp, which is disabled by default with this IOS
+no auto-summary
+end
+wr
+# show ip protocols
+# show ip eigrp int 
+# show ip eigrp neighbors
+# show ip eigrp topology
+# show run | section eigrp
+
+S2
+---
+ena
+conf t
+# autonomous system number must be the same on S2
+router eigrp 100
+network 10.0.0.0
+# it is a good practice to disable auto summarization in eigrp, which is disabled by default with this IOS
+no auto-summary
+end
+wr
+# show ip protocols
+# show ip eigrp int 
+# show ip eigrp neighbors
+# show ip eigrp topology
+# show run | section eigrp
+
+R3
+---
+ena
+conf t
+router eigrp 100
+# only enable on 1 interface, using inverse mask
+network 10.1.100.253 0.0.0.0
+# it is a good practice to disable auto summarization in eigrp, which is disabled by default with this IOS
+no auto-summary
+end
+wr
+# show ip protocols
+# show ip eigrp int 
+# there is a L2 connection between R3 and S1 and S2
+# show ip eigrp neighbors
+# show ip eigrp topology
+# show run | section eigrp
+
