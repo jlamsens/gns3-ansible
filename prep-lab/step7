@@ -8,10 +8,9 @@ ena
 conf t
 int ra g0/0-1
 shut
-switchport trunk encapsulation dot1q
-switchport mode trunk
 # enable LACP using negotiation
 channel-group 1 mode active
+int po1
 spanning-tree link-type point-to-point
 no shut
 end
@@ -23,12 +22,12 @@ ena
 conf t
 int ra g0/0-1
 shut
-switchport trunk encapsulation dot1q
-switchport mode trunk
 # enable LACP using negotiation
 channel-group 1 mode active
+in tpo1
 spanning-tree link-type point-to-point
 no shut
 end
 wr
+
 
