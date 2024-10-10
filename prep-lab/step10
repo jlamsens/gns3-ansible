@@ -1,0 +1,26 @@
+STEP 10
+-> HSRP for VLAN10
+
+S1
+---
+ena
+conf t
+int vlan 10
+standby 1 ip 10.1.10.254
+# default is 100
+standby 1 priority 200
+standby 1 preempt
+end
+wr
+
+
+S2
+---
+ena
+conf t
+int vlan 10
+standby 1 ip 10.1.10.254
+# default is 100, won’t be visible in running configuration
+standby 1 priority 100
+end
+wr
