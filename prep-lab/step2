@@ -1,0 +1,38 @@
+STEP2
+
+R1
+---
+#Router interfaces are administratively down by default
+conf t
+hostname R1
+int g0/0
+ip add 10.1.10.11 255.255.255.0
+no shut
+end
+wr
+
+R2
+---
+#Router interfaces are administratively down by default
+conf t
+hostname R2
+int g0/0
+ip add 10.1.20.12 255.255.255.0
+no shut
+end
+wr
+
+R3
+---
+#Router interfaces are administratively down by default
+conf t
+hostname R3
+# already present as this is the MGMT interface
+int g0/0
+ip add 10.1.100.253 255.255.255.0
+no shut
+int g0/1
+ip add dhcp
+no shut
+end
+wr
