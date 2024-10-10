@@ -19,3 +19,12 @@ access-list 1 permit 10.0.0.0 0.255.255.255
 # debug ip nat
 end
 wr
+
+TEST
+---
+R1 and R2 should have L3 connectivity to Internet
+from R1: ping 8.8.8.8
+from R2: ping 8.8.8.8
+
+on R3
+show ip nat translations
