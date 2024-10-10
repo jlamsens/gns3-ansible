@@ -1,0 +1,39 @@
+STEP 9
+-> improve convergence even better using portfast (edge port)
+
+
+S3
+---
+ena
+conf t
+int g0/2
+spanning-tree portfast
+end
+wr
+
+S4
+---
+ena
+conf t
+int g0/2
+spanning-tree portfast
+end
+wr
+
+S1
+---
+ena
+conf t
+int g1/0
+spanning-tree portfast
+end
+wr
+
+S2
+---
+ena
+conf t
+int g1/0
+spanning-tree portfast
+end
+wr
