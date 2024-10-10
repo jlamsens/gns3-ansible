@@ -1,0 +1,77 @@
+STEP1
+
+S1
+---
+ena
+conf t
+hostname S1
+int ra g1/1-3, g2/0-3, g3/0-3
+shut
+exit
+# VTP is server by default
+#do show vtp status
+vtp mode transparent
+vlan 10
+name SALES
+exit
+vlan 20
+name ADMIN
+end
+wr
+
+S2
+---
+ena
+conf t
+hostname S2
+int ra g1/1-3, g2/0-3, g3/0-3
+shut
+exit
+# VTP is “server” by default
+# do show vtp status
+vtp mode transparent
+vlan 10
+name SALES
+exit
+vlan 20
+name ADMIN
+end
+wr
+
+S3
+---
+ena
+conf t
+hostname S3
+int ra g0/3, g1/0-3, g2/0-3, g3/0-3
+shut
+exit
+# VTP is “server” by default
+# do show vtp status
+vtp mode transparent
+vlan 10
+name SALES
+exit
+vlan 20
+name ADMIN
+end
+wr
+
+S4
+---
+ena
+conf t
+hostname S4
+int ra g0/3, g1/0-3, g2/0-3, g3/0-3
+shut
+exit
+# VTP is “server” by default
+# do show vtp status
+vtp mode transparent
+vlan 10
+name SALES
+exit
+vlan 20
+name ADMIN
+end
+wr
