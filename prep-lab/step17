@@ -1,0 +1,21 @@
+STEP17
+-> enable NAT
+
+
+R3
+---
+ena
+conf t
+int g0/1
+ip nat outside
+int g0/0
+ip nat inside
+exit
+# enable PAT
+ip nat inside source list 1 int g0/1 overload
+access-list 1 permit 10.0.0.0 0.255.255.255
+# show run | in nat
+# show ip nat translations
+# debug ip nat
+end
+wr
