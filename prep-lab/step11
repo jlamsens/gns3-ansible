@@ -1,0 +1,27 @@
+STEP11
+-> HSRP for VLAN11
+
+S1
+---
+ena
+conf t
+int vlan 20
+# you can use the same standby group number for another VLAN
+standby 1 ip 10.1.20.254
+# default is 100, won’t be visible in running configuration
+standby 1 priority 100
+end
+wr
+
+S2
+---
+ena
+conf t
+int vlan 20
+# you can use the same standby group number for another VLAN
+standby 1 ip 10.1.20.254
+# default is 100
+standby 1 priority 200
+standby 1 preempt
+end
+wr
