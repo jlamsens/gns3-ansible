@@ -1,0 +1,49 @@
+STEP 5
+-> access ports
+
+
+S1
+---
+ena
+conf t
+int g1/0
+switchport mode access
+# defaults commands do not show up in the running config
+switchport access vlan 1
+switchport nonegotiate
+end
+wr
+
+S2
+---
+ena
+conf t
+int g1/0
+switchport mode access
+# defaults commands do not show up in the running config
+switchport access vlan 1
+switchport nonegotiate
+end
+wr
+
+S3
+---
+ena
+conf t
+int g0/2
+switchport mode access
+switchport access vlan 10
+switchport nonegotiate
+end
+wr
+
+S4
+---
+ena
+conf t
+int g0/2
+switchport mode access
+switchport access vlan 20
+switchport nonegotiate
+end
+wr
