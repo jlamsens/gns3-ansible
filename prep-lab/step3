@@ -1,0 +1,35 @@
+STEP 3
+
+S1
+---
+ena
+conf t
+int vlan 10
+ip add 10.1.10.1 255.255.255.0
+no shut
+#
+int vlan 20
+ip add 10.1.20.1 255.255.255.0
+no shut
+#
+end
+# SVI VLAN10 and VLAN20 are still down, as no trunks are configured yet
+show ip int br
+wr
+
+S2
+---
+ena
+conf t
+int vlan 10
+ip add 10.1.10.2 255.255.255.0
+no shut
+#
+int vlan 20
+ip add 10.1.20.2 255.255.255.0
+no shut
+#
+end
+# SVI VLAN10 and VLAN20 are still down, as no trunks are configured yet
+show ip int br
+wr
