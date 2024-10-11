@@ -38,6 +38,7 @@ ip add 10.1.100.253 255.255.255.0
 no shut
 int g0/1
 ip add dhcp
+duplex full
 #Router interfaces are administratively down by default
 no shut
 end
