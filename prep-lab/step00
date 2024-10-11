@@ -72,3 +72,21 @@ transport input ssh
 login local
 end
 wr
+
+R3
+---
+ena
+conf t
+hostname R3
+int g0/0
+ip add 10.1.100.253 255.255.255.0
+no shut
+exit
+ip domain-name opensysadmins.lab
+crypto key generate rsa modulus 1024
+username admin priv 15 secret admin
+line vty 0 4
+transport input ssh
+login local
+end
+wr
