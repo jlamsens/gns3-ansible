@@ -1,0 +1,74 @@
+STEP00
+-> enable SSH on management IP
+
+S1
+---
+ena
+conf t
+hostname S1
+int vlan 1
+ip add 10.1.100.1 255.255.255.0
+no shut
+exit
+ip domain-name opensysadmins.lab
+crypto key generate rsa modulus 1024
+username admin priv 15 secret admin
+line vty 0 4
+transport input ssh
+login local
+end
+wr
+
+S2
+---
+ena
+conf t
+hostname S2
+int vlan 1
+ip add 10.1.100.2 255.255.255.0
+no shut
+exit
+ip domain-name opensysadmins.lab
+crypto key generate rsa modulus 1024
+username admin priv 15 secret admin
+line vty 0 4
+transport input ssh
+login local
+end
+wr
+
+S3
+---
+ena
+conf t
+hostname S3
+int vlan 1
+ip add 10.1.100.3 255.255.255.0
+no shut
+exit
+ip domain-name opensysadmins.lab
+crypto key generate rsa modulus 1024
+username admin priv 15 secret admin
+line vty 0 4
+transport input ssh
+login local
+end
+wr
+
+S4
+---
+ena
+conf t
+hostname S4
+int vlan 1
+ip add 10.1.100.4 255.255.255.0
+no shut
+exit
+ip domain-name opensysadmins.lab
+crypto key generate rsa modulus 1024
+username admin priv 15 secret admin
+line vty 0 4
+transport input ssh
+login local
+end
+wr
