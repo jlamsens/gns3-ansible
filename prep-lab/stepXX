@@ -1,3 +1,420 @@
 STEPXX
 -> the shortest way to configure the GNS3 lab
 
+############################################################################################################################
+
+S1
+---
+ena
+conf t
+hostname S1
+int ra g1/1-3, g2/0-3, g3/0-3
+shut
+exit
+# VTP is "server" by default
+#do show vtp status
+vtp mode transparent
+vlan 10
+name SALES
+exit
+vlan 20
+name ADMIN
+end
+#
+conf t
+int vlan 10
+ip add 10.1.10.1 255.255.255.0
+no shut
+#
+int vlan 20
+ip add 10.1.20.1 255.255.255.0
+no shut
+#
+end
+# SVI VLAN10 and VLAN20 are still down, as no trunks are configured yet
+show ip int br
+#
+conf t
+int ra g0/0-3
+switchport trunk encapsulation dot1q
+switchport mode trunk
+# disable DTP as it is still enabled
+switchport nonegotiate
+end
+#
+conf t
+int g1/0
+switchport mode access
+# defaults commands do not show up in the running config
+switchport access vlan 1
+switchport nonegotiate
+end
+#
+conf t
+# make this switch the root for VLAN10
+spanning-tree vlan 10 priority 0
+# make this switch the root for VLAN1
+spanning-tree vlan 1 priority 0
+end
+#
+conf t
+# make this switch the BACKUP root for VLAN20
+spanning-tree vlan 20 priority 4096
+end
+#
+conf t
+int ra g0/0-1
+shut
+# enable LACP using negotiation
+channel-group 1 mode active
+no shut
+int po1
+spanning-tree link-type point-to-point
+no shut
+end
+#
+conf t
+int g1/0
+spanning-tree portfast
+end
+#
+conf t
+int vlan 10
+standby 1 ip 10.1.10.254
+# default is 100
+standby 1 priority 200
+standby 1 preempt
+end
+#
+conf t
+int vlan 20
+# you can use the same standby group number for another VLAN
+standby 1 ip 10.1.20.254
+# default is 100, won't be visible in running configuration
+standby 1 priority 100
+end
+#
+conf t
+# hello timer of 1, hold timer of 3 (miliseconds)
+int vlan10
+standby 1 timers 1 3
+int vlan20
+standby 1 timers 1 3
+end
+#
+conf t
+# autonomous system number must be the same on S2
+router eigrp 100
+network 10.0.0.0
+# it is a good practice to disable auto summarization in eigrp, which is disabled by default with this IOS
+no auto-summary
+end
+wr
+
+############################################################################################################################
+
+S2
+---
+ena
+conf t
+hostname S2
+int ra g1/1-3, g2/0-3, g3/0-3
+shut
+exit
+# VTP is "server" by default
+# do show vtp status
+vtp mode transparent
+vlan 10
+name SALES
+exit
+vlan 20
+name ADMIN
+end
+#
+conf t
+int vlan 10
+ip add 10.1.10.2 255.255.255.0
+no shut
+#
+int vlan 20
+ip add 10.1.20.2 255.255.255.0
+no shut
+#
+end
+# SVI VLAN10 and VLAN20 are still down, as no trunks are configured yet
+show ip int br
+#
+conf t
+int ra g0/0-3
+switchport trunk encapsulation dot1q
+switchport mode trunk
+# disable DTP as it is still enabled
+switchport nonegotiate
+end
+#
+conf t
+int g1/0
+switchport mode access
+# defaults commands do not show up in the running config
+switchport access vlan 1
+switchport nonegotiate
+end
+#
+conf t
+# make this switch the root for VLAN20
+spanning-tree vlan 20 priority 0
+end
+#
+conf t
+# make this switch the BACKUP root for VLAN10
+spanning-tree vlan 10 priority 4096
+# make this switch the BACKUP root for VLAN1
+spanning-tree vlan 1 priority 4096
+end
+#
+conf t
+int ra g0/0-1
+shut
+# enable LACP using negotiation
+channel-group 1 mode active
+no shut
+int po1
+spanning-tree link-type point-to-point
+no shut
+end
+#
+conf t
+int g1/0
+spanning-tree portfast
+end
+#
+conf t
+int vlan 10
+standby 1 ip 10.1.10.254
+# default is 100, won't be visible in running configuration
+standby 1 priority 100
+end
+#
+conf t
+int vlan 20
+# you can use the same standby group number for another VLAN
+standby 1 ip 10.1.20.254
+# default is 100
+standby 1 priority 200
+standby 1 preempt
+end
+#
+conf t
+# hello timer of 1, hold timer of 3 (miliseconds)
+int vlan10
+standby 1 timers 1 3
+int vlan20
+standby 1 timers 1 3
+end
+#
+conf t
+# autonomous system number must be the same on S2
+router eigrp 100
+network 10.0.0.0
+# it is a good practice to disable auto summarization in eigrp, which is disabled by default with this IOS
+no auto-summary
+end
+wr
+
+############################################################################################################################
+S3
+############################################################################################################################
+ena
+conf t
+hostname S3
+int ra g0/3, g1/0-3, g2/0-3, g3/0-3
+shut
+exit
+# VTP is "server" by default
+# do show vtp status
+vtp mode transparent
+vlan 10
+name SALES
+exit
+vlan 20
+name ADMIN
+end
+#
+conf t
+int ra g0/0-1
+switchport trunk encapsulation dot1q
+switchport mode trunk
+# disable DTP as it is still enabled
+switchport nonegotiate
+end
+#
+conf t
+int g0/2
+switchport mode access
+switchport access vlan 10
+switchport nonegotiate
+end
+#
+conf t
+int ra g0/0-1
+spanning-tree link-type point-to-point
+end
+#
+conf t
+int g0/2
+spanning-tree portfast
+end
+wr
+
+############################################################################################################################
+S4
+############################################################################################################################
+ena
+conf t
+hostname S4
+int ra g0/3, g1/0-3, g2/0-3, g3/0-3
+shut
+exit
+# VTP is "server" by default
+# do show vtp status
+vtp mode transparent
+vlan 10
+name SALES
+exit
+vlan 20
+name ADMIN
+end
+#
+conf t
+int ra g0/0-1
+switchport trunk encapsulation dot1q
+switchport mode trunk
+# disable DTP as it is still enabled
+switchport nonegotiate
+end
+#
+conf t
+int g0/2
+switchport mode access
+switchport access vlan 20
+switchport nonegotiate
+end
+#
+conf t
+int ra g0/0-1
+spanning-tree link-type point-to-point
+end
+#
+conf t
+int g0/2
+spanning-tree portfast
+end
+wr
+
+############################################################################################################################
+R1
+############################################################################################################################
+
+#ena
+conf t
+hostname R1
+int g0/0
+ip add 10.1.10.11 255.255.255.0
+#Router interfaces are administratively down by default
+no shut
+end
+#
+conf t
+ip route 0.0.0.0 0.0.0.0 10.1.10.254
+end
+#
+conf t
+# enabled by default
+ip domain-lookup
+# use google DNS server
+ip name-server 8.8.8.8
+end
+wr
+
+############################################################################################################################
+R2
+############################################################################################################################
+
+#ena
+conf t
+hostname R2
+int g0/0
+ip add 10.1.20.12 255.255.255.0
+#Router interfaces are administratively down by default
+no shut
+end
+#
+conf t
+# let's disable ip routing just for fun
+no ip routing
+# now we have to use another command 
+ip default-gateway 10.1.20.254
+end
+#
+conf t
+# enabled by default
+ip domain-lookup
+# use google DNS server
+ip name-server 8.8.8.8
+end
+wr
+
+############################################################################################################################
+R3
+############################################################################################################################
+#ena
+conf t
+hostname R3
+# already present as this is the MGMT interface
+int g0/0
+ip add 10.1.100.253 255.255.255.0
+#Router interfaces are administratively down by default
+no shut
+int g0/1
+ip add dhcp
+#Router interfaces are administratively down by default
+no shut
+end
+#
+conf t
+router eigrp 100
+# only enable on 1 interface, using inverse mask
+network 10.1.100.253 0.0.0.0
+# it is a good practice to disable auto summarization in eigrp, which is disabled by default with this IOS
+no auto-summary
+end
+#
+conf t
+int loop0
+ip add 3.3.3.3 255.255.255.255
+exit
+router eigrp 100
+network 3.3.3.3 0.0.0.0
+end
+#
+conf t
+router eigrp 100
+redistribute static metric 10000 100 255 1 1500
+end
+#
+conf t
+int g0/1
+ip nat outside
+int g0/0
+ip nat inside
+exit
+# enable PAT
+ip nat inside source list 1 int g0/1 overload
+access-list 1 permit 10.0.0.0 0.255.255.255
+# show run | in nat
+# show ip nat translations
+# debug ip nat
+end
+wr
+
+############################################################################################################################
