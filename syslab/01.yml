@@ -1,6 +1,6 @@
 ---
 
-- name: First playbook
+- name: First play in my first playbook
   hosts: vm26
   tasks:
     - name: Print a message
