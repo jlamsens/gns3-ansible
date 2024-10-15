@@ -1,6 +1,23 @@
 STEP08
 -> optimize STP further
 
+S1
+---
+ena
+conf t
+int ra g0/2-3
+spanning-tree link-type point-to-point
+end
+wr
+
+S2
+---
+ena
+conf t
+int ra g0/2-3
+spanning-tree link-type point-to-point
+end
+wr
 
 S3
 ---
