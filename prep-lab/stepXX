@@ -88,6 +88,11 @@ no shut
 end
 #
 conf t
+int ra g0/2-3
+spanning-tree link-type point-to-point
+end
+#
+conf t
 int g1/0
 spanning-tree portfast
 end
@@ -210,6 +215,11 @@ no shut
 int po1
 spanning-tree link-type point-to-point
 no shut
+end
+#
+conf t
+int ra g0/2-3
+spanning-tree link-type point-to-point
 end
 #
 conf t
