@@ -1,7 +1,7 @@
 ---
 
 - name: Play STEP1
-  hosts: distribution, access
+  hosts: distribution, access, routers
   gather_facts: no
 
   tasks:
