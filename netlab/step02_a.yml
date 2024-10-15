@@ -1,6 +1,6 @@
 ---
 
-- name: Play STEP2
+- name: Play STEP02
   hosts: R3
   gather_facts: no
 
@@ -12,10 +12,3 @@
         config:
           hostname: "{{ inventory_hostname }}"
         state: merged
-      notify: Save configuration
-
-  handlers:
-    - name: Save configuration
-      cisco.ios.ios_command:
-        commands: "write memory"
-      when: not ansible_check_mode
