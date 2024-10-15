@@ -1,5 +1,5 @@
 STEP01
--> hostname, shutdown unused interfaces, vtp and VLANs
+-> hostname, shutdown unused interfaces, vtp and VLANs on all switches
 
 
 S1
