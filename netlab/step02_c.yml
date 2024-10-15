@@ -31,3 +31,4 @@
           - name: GigabitEthernet0/1
             enabled: true
             description: DHCP IP
+            duplex: full
