@@ -1,0 +1,33 @@
+---
+
+- name: Play STEP02
+  hosts: R3
+  gather_facts: no
+
+  tasks:
+
+    # use the specialized module instead of ios_config
+    - name: Configure hostname
+      cisco.ios.ios_hostname:
+        config:
+          hostname: "{{ inventory_hostname }}"
+        state: merged
+    
+    # link to ISP
+    - name: Configure DHCP
+      cisco.ios.ios_l3_interfaces:
+        config:
+          - name: GigabitEthernet0/1
+            ipv4:
+              - dhcp:
+                  enable: true
+        state: merged
+
+      # method4
+      # does not result in a changed state on a physical interface
+    - name: Bring up the interface
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet0/1
+            enabled: true
+            description: DHCP IP
