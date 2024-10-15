@@ -1,13 +1,12 @@
----
+- name: Main Playbook to include others
+  hosts: all
+  gather_facts: no
 
-- name: include step1
-  import_playbook: 07.yml
-
-- name: include step2
-  import_playbook: 09.yml
-
-- name: include step10
-  import_playbook: 10.yml
-
-- name: include step11
-  import_playbook: 11.yml
+- import_playbook: step01_h.yml
+# - import_playbook: stepXX_X.yml
+# - import_playbook: stepXX_X.yml
+# - import_playbook: stepXX_X.yml
+# - import_playbook: stepXX_X.yml
+# - import_playbook: stepXX_X.yml
+# - import_playbook: stepXX_X.yml
+# - ...
