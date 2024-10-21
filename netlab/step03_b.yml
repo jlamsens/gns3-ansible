@@ -1,0 +1,59 @@
+---
+
+- name: Play STEP03a
+  hosts: S1
+  gather_facts: no
+
+  tasks:
+
+    # does result in a "changed" state on a VLAN interface, that's annoying!
+    - name: Configure static IP
+      cisco.ios.ios_l3_interfaces:
+        config:
+          - name: Vlan10
+            ipv4:
+              - address: 10.1.10.1 255.255.255.0
+          - name: Vlan20
+            ipv4:
+              - address: 10.1.20.1 255.255.255.0
+        state: merged
+
+    # does not result in a "changed" state
+    - name: Bring up the SVI interface
+      cisco.ios.ios_interfaces:
+        config:
+          - name: Vlan10
+            enabled: true
+            description: SVI for VLAN 10
+          - name: Vlan20
+            enabled: true
+            description: SVI for VLAN 20
+
+- name: Play STEP03b
+  hosts: S2
+  gather_facts: no
+
+  tasks:
+
+    # does result in a "changed" state on a VLAN interface, that's annoying!
+    - name: Configure static IP
+      cisco.ios.ios_l3_interfaces:
+        config:
+          - name: Vlan10
+            ipv4:
+              - address: 10.1.10.2 255.255.255.0
+          - name: Vlan20
+            ipv4:
+              - address: 10.1.20.2 255.255.255.0
+        state: merged
+
+    # does not result in a "changed" state
+    - name: Bring up the SVI interface
+      cisco.ios.ios_interfaces:
+        config:
+          - name: Vlan10
+            enabled: true
+            description: SVI for VLAN 10
+          - name: Vlan20
+            enabled: true
+            description: SVI for VLAN 20
